@@ -1,0 +1,23 @@
+import React from 'react'
+import { useAuth } from '../../contexts/AuthContext'
+import { useNavigate } from 'react-router-dom'
+import Profile from './Profile'
+
+export default function Logout() {
+    const { logout } = useAuth()
+    const navigate = useNavigate()
+
+    function handleAuth() {
+        logout()
+        navigate('/')
+    }
+
+  return (
+    <div className="logout mt-1">
+        <Profile />
+        <button className="btn btn-danger" onClick={() => handleAuth()}>
+            Logout
+        </button>
+    </div>
+  )
+}

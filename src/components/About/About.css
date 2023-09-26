@@ -1,0 +1,35 @@
+.photo {
+    border-radius: 130px 130px;
+    width: 60%;
+    border: 2px solid rgb(216, 0, 0);
+}
+
+.information {
+    background-color: rgba(255, 255, 255, 0.85) !important;
+    border: 2px solid rgb(216, 0, 0) !important;
+}
+
+.text {
+    font-family: Impact, Haettenschweiler, "Arial Narrow Bold", monospace;
+}
+
+.info {
+    font-size: 2.5vh;
+}
+
+@media only screen and (max-width: 1565px) {
+    .photo {
+        border-radius: 130px 130px;
+        width: 40vh;
+        border: 2px solid rgb(216, 0, 0);
+    }
+}
+
+@media only screen and (max-width: 1085px) {
+    .photo {
+        border-radius: 130px 130px;
+        margin-top: 4%;
+        width: 90%;
+        border: 2px solid rgb(216, 0, 0);
+    }
+}

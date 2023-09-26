@@ -1,0 +1,25 @@
+#hometitle {
+    font-size: 5vh;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', monospace;
+    color: rgb(216, 0, 0);
+    transition: .5s ease-in-out !important;
+}
+
+#hometitle:hover {
+    color: white;
+}
+
+.nav-sub {
+    font-size: 3vh;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', monospace;
+    padding-left: 1vh;
+    padding-right: 1vh;
+    text-decoration: none;
+    color: rgb(216, 0, 0);
+    transition: .5s ease-in-out !important;
+}
+
+.nav-sub:hover{
+    color: white;
+    font-size: 3.5vh;
+}
