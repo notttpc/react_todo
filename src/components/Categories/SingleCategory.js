@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 //Our edit and delete buttons use icons from Font Awesome. We access those icons via
 // the React Icons npm package (npm install react-icons)
-import { faTrash, FaEdit, FaTrashAlt } from 'react-icons/fa'
+import { FaEdit, FaTrashAlt } from 'react-icons/fa'
 import { useAuth } from '../../contexts/AuthContext'
 import axios from 'axios'
+import CatEdit from './CatEdit'
 
 export default function SingleCategory(props) {
     const { catName, catDesc, categoryId } = props.category
@@ -30,6 +31,13 @@ export default function SingleCategory(props) {
             <button className='m-1 rounded' id='editLink' onClick={() => setShowEdit(true)}>
               <FaEdit />
             </button>
+            {showEdit &&
+              <CatEdit
+                showEdit={showEdit}
+                setShowEdit={setShowEdit}
+                getCategories={props.getCategories}
+                category={props.category} />
+            }
             <button className='m-1 rounded' id='deleteLink' onClick={() => deleteCat(categoryId)}>
               <FaTrashAlt />
             </button>

@@ -2,6 +2,10 @@
   text-align: center;
 }
 
+* {
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', monospace;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -26,6 +30,10 @@
 
 .App-link {
   color: #61dafb;
+}
+
+#footer {
+  font-weight: lighter;
 }
 
 @keyframes App-logo-spin {
