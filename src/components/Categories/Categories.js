@@ -17,7 +17,7 @@ export default function Categories() {
     const [showCreate, setShowCreate] = useState(false);
 
     const getCategories = () => {
-        axios.get(`https://localhost:7019/api/Categories`).then((response) => {
+        axios.get(`http://todoapi.blakemharrison.com/api/Categories`).then((response) => {
             console.log(response);
             setCategories(response.data);
         });
@@ -36,8 +36,8 @@ export default function Categories() {
                     <div className="bg-dark p-2 mb-3 text-center col-md-6 offset-3">
                         {showCreate ? (
                             <>
-                                <button onClick={() => setShowCreate(false)} className="btn btn-danger">
-                                    Cancel
+                                <button onClick={() => setShowCreate(false)} className="btn btn-outline-danger">
+                                    Close Form
                                 </button>
                                 <CatCreate setShowCreate={setShowCreate} getCategories={getCategories} />
                             </>
@@ -63,11 +63,11 @@ export default function Categories() {
                             </thead>
                             <tbody>
                                 {/* READ UI */}
-                                {categories.map((c) => (
+                                {categories.map(c => 
                                     // We add getCategories as a prop below so we can call this functionality
                                     // from the Singlecategory component and pass it to our Edit logic in CatForm
                                     <SingleCategory key={c.categoryId} category={c} getCategories={getCategories} />
-                                ))}
+                                )}
                                 {/* END READ UI */}
                             </tbody>
                         </table>

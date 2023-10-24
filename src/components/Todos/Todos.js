@@ -7,22 +7,24 @@ import FilterCat from "./FilterCat";
 import ToDoCreate from "./ToDoCreate";
 
 export default function Todos() {
-    const [resources, setResources] = useState([]);
+    const [toDo, setToDo] = useState([]);
 
     // The below hooks are added for create functionality
     const { currentUser } = useAuth();
     const [showCreate, setShowCreate] = useState(false);
 
     const [filter, setFilter] = useState(0);
+    const [showDone, setShowDone] = useState(false);
 
-    const getResources = () => {
-        axios.get(`https://localhost:7019/api/ToDos`).then((response) => {
-            setResources(response.data);
+    const getToDos = () => {
+        axios.get(`http://todoapi.blakemharrison.com/api/ToDos`).then((response) => {
+            console.log();
+            setToDo(response.data);
         });
     };
 
     useEffect(() => {
-        getResources()
+        getToDos();
     }, []);
 
     return (
@@ -37,38 +39,61 @@ export default function Todos() {
                         <div className="createContainer">
                             {showCreate && (
                                 //Conditionally render ResourceCreate when showCreate === true
-                                <ToDoCreate setShowCreate={setShowCreate} getResources={getResources} />
+                                <ToDoCreate setShowCreate={setShowCreate} getToDos={getToDos} />
                             )}
                         </div>
                     </div>
                 )}
             </article>
-            <FilterCat setFilter={setFilter} />
+            <FilterCat setFilter={setFilter} showDone={showDone} setShowDone={setShowDone} />
             <section className="ToDos">
-                    <Container className="p-2">
-                        <table id="table" className="table table-dark table-striped my-3">
-                            <thead className="table-danger">
-                                <tr>
-                                    <th>Completed?</th>
-                                    <th>Task</th>
-                                    <th>Category</th>
-                                    {currentUser.email === process.env.REACT_APP_ADMIN_EMAIL && (
-                                    <th>Tools</th>
-                                    )}
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {/* READ UI */}
-                                {resources.map((r) => (
-                                    // We add getCategories as a prop below so we can call this functionality
-                                    // from the Singlecategory component and pass it to our Edit logic in CatForm
-                                    <SingleToDo key={r.toDoId} toDo={r} getResources={getResources} />
-                                ))}
-                                {/* END READ UI */}
-                            </tbody>
-                        </table>
-                    </Container>
-                </section>
+                <Container className="p-2">
+                    <table id="table" className="table table-dark table-striped my-3">
+                        <thead className="table-danger">
+                            <tr>
+                                <th>Completed?</th>
+                                <th>Task</th>
+                                <th>Category</th>
+                                {currentUser.email === process.env.REACT_APP_ADMIN_EMAIL && <th>Tools</th>}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {!showDone ? (
+                                <>
+                                    {filter === 0
+                                        ? toDo
+                                              .filter((x) => x.done === false)
+                                              .map((x) => <SingleToDo key={x.toDoId} todo={x} getToDos={getToDos} />)
+                                        : toDo
+                                              .filter((x) => x.done === false && x.categoryId === filter)
+                                              .map((x) => <SingleToDo key={x.toDoId} todo={x} getToDos={getToDos} />)}
+                                </>
+                            ) : (
+                                <>
+                                    {filter === 0
+                                        ? toDo.map((x) => <SingleToDo key={x.toDoId} todo={x} getToDos={getToDos} />)
+                                        : toDo
+                                              .filter((x) => x.categoryId === filter)
+                                              .map((x) => <SingleToDo key={x.toDoId} todo={x} getToDos={getToDos} />)}
+                                </>
+                            )}
+                        </tbody>
+                    </table>
+                    {!showDone ? (
+                        <>
+                            {filter !== 0 && toDo.filter((x) => x.done === false && x.categoryId === filter).length === 0 && (
+                                <h2 className="alert alert-warning text-dark">There are no incomplete To Do items in this category.</h2>
+                            )}
+                        </>
+                    ) : (
+                        <>
+                            {filter !== 0 && toDo.filter((x) => x.categoryId === filter).length === 0 && (
+                                <h2 className="alert alert-warning text-dark">There are no To Do items in this category.</h2>
+                            )}
+                        </>
+                    )}
+                </Container>
+            </section>
         </div>
     );
 }

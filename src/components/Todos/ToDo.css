@@ -1,3 +1,9 @@
 #filters {
     font-size: 25px;
 }
+
+input.checkbox {
+    width: 2em;
+    height: 2em;
+    accent-color: #dc3545;
+}
